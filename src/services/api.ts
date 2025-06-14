@@ -52,9 +52,30 @@ export const movieAPI = {
     }
   },
 
+  searchMovies: async (query: string, page = 1): Promise<MovieResponse> => {
+    try {
+      const response = await api.get<MovieResponse>("/search/movie", {
+        params: {
+          query,
+          page,
+          language: "en-US",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw new Error(
+          error.response?.data.status_message ||
+            "Failed to search movies"
+        );
+      }
+      throw error;
+    }
+  },
+
   // Helper function to get full image URL
-  getImageUrl: (path: string, size: "w500" | "original" = "w500"): string => {
-    if (!path) return "";
+  getImageUrl: (path: string, size: "w500" | "original" = "w500"): string | null => {
+    if (!path) return null;
     return `https://image.tmdb.org/t/p/${size}${path}`;
   },
 };

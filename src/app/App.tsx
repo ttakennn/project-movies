@@ -5,6 +5,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Layout from '../components/Layout/Layout';
 import MovieDetail from '../components/MovieDetail/MovieDetail';
 import MovieList from '../components/MovieList/MovieList';
+import SearchResults from '../pages/SearchResults';
 import Sidebar from '../components/Sidebar/Sidebar';
 import { useState } from 'react';
 
@@ -28,6 +29,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<MovieListWithSidebar />} />
           <Route path="/movie/:id" element={<MovieDetail />} />
+          <Route path="/search" element={<SearchResults />} />
         </Routes>
       </Layout>
     </Router>
