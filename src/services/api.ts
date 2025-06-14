@@ -1,4 +1,5 @@
-import type { MovieResponse } from "../types/movie";
+import type { MovieDetail, MovieResponse } from "../types/movie";
+
 import axios from "axios";
 
 const apiKey = import.meta.env.VITE_TMDB_API_KEY;
@@ -67,6 +68,26 @@ export const movieAPI = {
         throw new Error(
           error.response?.data.status_message ||
             "Failed to search movies"
+        );
+      }
+      throw error;
+    }
+  },
+
+  getMovieDetail: async (id: string): Promise<MovieDetail> => {
+    try {
+      const response = await api.get<MovieDetail>(`/movie/${id}`, {
+        params: {
+          language: "en-US",
+          append_to_response: "credits",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw new Error(
+          error.response?.data.status_message ||
+            "Failed to fetch movie details"
         );
       }
       throw error;

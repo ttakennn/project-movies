@@ -1,8 +1,4 @@
 .movie-detail {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-
   @media (max-width: 768px) {
     padding: 1rem;
   }
@@ -47,6 +43,12 @@
 
   &__title {
     font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &__tagline {
+    font-style: italic;
+    color: rgba($primary-color, 0.7);
     margin-bottom: 1rem;
   }
 
@@ -101,5 +103,32 @@
     background-color: rgba($primary-color, 0.05);
     border-radius: 20px;
     font-size: 0.9rem;
+  }
+
+  &__error {
+    text-align: center;
+    padding: 2rem;
+    background-color: rgba($primary-color, 0.05);
+    border-radius: 8px;
+    margin: 2rem 0;
+
+    p {
+      color: $primary-color;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background-color: rgba($primary-color, 0.8);
+      }
+    }
   }
 } 

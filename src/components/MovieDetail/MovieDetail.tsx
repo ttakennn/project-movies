@@ -1,75 +1,138 @@
-import { useParams, useNavigate } from 'react-router-dom';
 import './MovieDetail.scss';
+
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import Loading from '../Loading/Loading';
+import type { MovieDetail as MovieDetailType } from '../../types/movie';
+import defaultImage from '../../assets/default-image.png';
+import { movieAPI } from '../../services/api';
 
 const MovieDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [movie, setMovie] = useState<MovieDetailType | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Dummy data - replace with actual API call later
-  const movieDetails = {
-    id: 1,
-    title: 'The Shawshank Redemption',
-    releaseDate: '1994-09-23',
-    image: 'https://via.placeholder.com/500x750',
-    rating: 9.3,
-    duration: '2h 22min',
-    genre: ['Drama', 'Crime'],
-    director: 'Frank Darabont',
-    cast: ['Tim Robbins', 'Morgan Freeman', 'Bob Gunton'],
-    overview: 'Over the course of several years, two convicts form a friendship, seeking consolation and, eventually, redemption through basic compassion.',
-  };
+  useEffect(() => {
+    const fetchMovieDetail = async () => {
+      if (!id) return;
+      
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await movieAPI.getMovieDetail(id);
+        setMovie(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to fetch movie details');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMovieDetail();
+  }, [id]);
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return (
+      <div className="movie-detail">
+        <button className="movie-detail__back" onClick={() => navigate(-1)}>
+          ← Back
+        </button>
+        <div className="movie-detail__error">
+          <p>Error: {error}</p>
+          <button onClick={() => window.location.reload()}>Try Again</button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!movie) {
+    return (
+      <div className="movie-detail">
+        <button className="movie-detail__back" onClick={() => navigate(-1)}>
+          ← Back
+        </button>
+        <div className="movie-detail__error">
+          <p>Movie not found</p>
+        </div>
+      </div>
+    );
+  }
+
+  const director = movie.credits?.crew.find(member => member.job === 'Director');
+  const cast = movie.credits?.cast.slice(0, 5) || [];
 
   return (
     <div className="movie-detail">
-      <button 
-        className="movie-detail__back" 
-        onClick={() => navigate(-1)}
-      >
+      <button className="movie-detail__back" onClick={() => navigate(-1)}>
         ← Back
       </button>
 
       <div className="movie-detail__content">
         <div className="movie-detail__poster">
-          <img src={movieDetails.image} alt={movieDetails.title} />
+          <img  
+            src={movieAPI.getImageUrl(movie.poster_path, 'original') || defaultImage} 
+            alt={movie.title} 
+          />
         </div>
 
         <div className="movie-detail__info">
-          <h1 className="movie-detail__title">{movieDetails.title}</h1>
+          <h1 className="movie-detail__title">{movie.title}</h1>
           
+          {movie.tagline && (
+            <p className="movie-detail__tagline">{movie.tagline}</p>
+          )}
+
           <div className="movie-detail__meta">
-            <span className="movie-detail__rating">★ {movieDetails.rating}</span>
-            <span className="movie-detail__duration">{movieDetails.duration}</span>
-            <span className="movie-detail__date">{movieDetails.releaseDate}</span>
+            <span className="movie-detail__rating">★ {movie.vote_average.toFixed(1)}</span>
+            {movie.runtime > 0 && (
+              <span className="movie-detail__duration">
+                {Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m
+              </span>
+            )}
+            <span className="movie-detail__date">
+              {new Date(movie.release_date).getFullYear()}
+            </span>
           </div>
 
           <div className="movie-detail__genres">
-            {movieDetails.genre.map(genre => (
-              <span key={genre} className="movie-detail__genre-tag">
-                {genre}
+            {movie.genres.map(genre => (
+              <span key={genre.id} className="movie-detail__genre-tag">
+                {genre.name}
               </span>
             ))}
           </div>
 
           <div className="movie-detail__section">
             <h3>Overview</h3>
-            <p>{movieDetails.overview}</p>
+            <p>{movie.overview}</p>
           </div>
 
-          <div className="movie-detail__section">
-            <h3>Director</h3>
-            <p>{movieDetails.director}</p>
-          </div>
-
-          <div className="movie-detail__section">
-            <h3>Cast</h3>
-            <div className="movie-detail__cast">
-              {movieDetails.cast.map(actor => (
-                <span key={actor} className="movie-detail__cast-member">
-                  {actor}
-                </span>
-              ))}
+          {director && (
+            <div className="movie-detail__section">
+              <h3>Director</h3>
+              <p>{director.name}</p>
             </div>
-          </div>
+          )}
+
+          {cast.length > 0 && (
+            <div className="movie-detail__section">
+              <h3>Cast</h3>
+              <div className="movie-detail__cast">
+                {cast.map(actor => (
+                  <span key={actor.id} className="movie-detail__cast-member">
+                    {actor.name} as {actor.character}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

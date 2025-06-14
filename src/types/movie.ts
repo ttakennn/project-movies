@@ -14,6 +14,27 @@ export interface Movie {
   video: boolean;
 }
 
+export interface MovieDetail extends Omit<Movie, 'genre_ids'> {
+  genres: { id: number; name: string }[];
+  runtime: number;
+  status: string;
+  tagline: string;
+  credits?: {
+    cast: {
+      id: number;
+      name: string;
+      character: string;
+      profile_path: string | null;
+    }[];
+    crew: {
+      id: number;
+      name: string;
+      job: string;
+      department: string;
+    }[];
+  };
+}
+
 export interface MovieResponse {
   page: number;
   results: Movie[];
