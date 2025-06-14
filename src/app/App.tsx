@@ -6,17 +6,17 @@ import Layout from '../components/Layout/Layout';
 import MovieDetail from '../components/MovieDetail/MovieDetail';
 import MovieList from '../components/MovieList/MovieList';
 import SearchResults from '../pages/SearchResults';
-import Sidebar from '../components/Sidebar/Sidebar';
+import Tabbar from '../components/Tabbar/Tabbar';
 import { useState } from 'react';
 
 type MovieCategory = 'now_playing' | 'top_rated';
 
-const MovieListWithSidebar = () => {
+const MovieListWithTabbar = () => {
   const [category, setCategory] = useState<MovieCategory>('now_playing');
 
   return (
     <>
-      <Sidebar currentCategory={category} onCategoryChange={setCategory} />
+      <Tabbar currentCategory={category} onCategoryChange={setCategory} />
       <MovieList category={category} />
     </>
   );
@@ -27,7 +27,7 @@ const App = () => {
     <Router>
       <Layout>
         <Routes>
-          <Route path="/" element={<MovieListWithSidebar />} />
+          <Route path="/" element={<MovieListWithTabbar />} />
           <Route path="/movie/:id" element={<MovieDetail />} />
           <Route path="/search" element={<SearchResults />} />
         </Routes>

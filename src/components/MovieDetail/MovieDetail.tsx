@@ -37,7 +37,6 @@ const MovieDetail = () => {
     fetchMovieDetail();
   }, [id]);
 
-
   if (loading) {
     return <Loading />;
   }
@@ -75,77 +74,79 @@ const MovieDetail = () => {
   const cast = movie.credits?.cast.slice(0, 5) || [];
 
   return (
-    <div className="movie-detail">
-      <button className="movie-detail__back" onClick={() => navigate(-1)}>
-        ← Back
-      </button>
+    <div className="container">
+      <div className="movie-detail">
+        <button className="movie-detail__back" onClick={() => navigate(-1)}>
+          ← Back
+        </button>
 
-      <div className="movie-detail__content">
-        <div className="movie-detail__poster">
-          <div className="movie-detail__poster-wrapper">
-            <LazyImage
-              src={
-                movieAPI.getImageUrl(movie.poster_path, "original") ||
-                defaultImage
-              }
-              alt={movie.title}
-            />
+        <div className="movie-detail__content">
+          <div className="movie-detail__poster">
+            <div className="movie-detail__poster-wrapper">
+              <LazyImage
+                src={
+                  movieAPI.getImageUrl(movie.poster_path, "original") ||
+                  defaultImage
+                }
+                alt={movie.title}
+              />
+            </div>
           </div>
-        </div>
 
-        <div className="movie-detail__info">
-          <h1 className="movie-detail__title">{movie.title}</h1>
+          <div className="movie-detail__info">
+            <h1 className="movie-detail__title">{movie.title}</h1>
 
-          {movie.tagline && (
-            <p className="movie-detail__tagline">{movie.tagline}</p>
-          )}
-
-          <div className="movie-detail__meta">
-            <span className="movie-detail__rating">
-              ★ {movie.vote_average.toFixed(1)}
-            </span>
-            {movie.runtime > 0 && (
-              <span className="movie-detail__duration">
-                {Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m
-              </span>
+            {movie.tagline && (
+              <p className="movie-detail__tagline">{movie.tagline}</p>
             )}
-            <span className="movie-detail__date">
-              {new Date(movie.release_date).getFullYear()}
-            </span>
-          </div>
 
-          <div className="movie-detail__genres">
-            {movie.genres.map((genre) => (
-              <span key={genre.id} className="movie-detail__genre-tag">
-                {genre.name}
+            <div className="movie-detail__meta">
+              <span className="movie-detail__rating">
+                ★ {movie.vote_average.toFixed(1)}
               </span>
-            ))}
-          </div>
-
-          <div className="movie-detail__section">
-            <h3>Overview</h3>
-            <p>{movie.overview}</p>
-          </div>
-
-          {director && (
-            <div className="movie-detail__section">
-              <h3>Director</h3>
-              <p>{director.name}</p>
+              {movie.runtime > 0 && (
+                <span className="movie-detail__duration">
+                  {Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m
+                </span>
+              )}
+              <span className="movie-detail__date">
+                {new Date(movie.release_date).getFullYear()}
+              </span>
             </div>
-          )}
 
-          {cast.length > 0 && (
+            <div className="movie-detail__genres">
+              {movie.genres.map((genre) => (
+                <span key={genre.id} className="movie-detail__genre-tag">
+                  {genre.name}
+                </span>
+              ))}
+            </div>
+
             <div className="movie-detail__section">
-              <h3>Cast</h3>
-              <div className="movie-detail__cast">
-                {cast.map((actor) => (
-                  <span key={actor.id} className="movie-detail__cast-member">
-                    {actor.name} as {actor.character}
-                  </span>
-                ))}
+              <h3>Overview</h3>
+              <p>{movie.overview}</p>
+            </div>
+
+            {director && (
+              <div className="movie-detail__section">
+                <h3>Director</h3>
+                <p>{director.name}</p>
               </div>
-            </div>
-          )}
+            )}
+
+            {cast.length > 0 && (
+              <div className="movie-detail__section">
+                <h3>Cast</h3>
+                <div className="movie-detail__cast">
+                  {cast.map((actor) => (
+                    <span key={actor.id} className="movie-detail__cast-member">
+                      {actor.name} as {actor.character}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

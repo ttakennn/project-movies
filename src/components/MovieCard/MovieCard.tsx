@@ -28,7 +28,7 @@ const MovieCard = forwardRef<HTMLAnchorElement, MovieCardProps>(
             src={movieAPI.getImageUrl(poster_path) || defaultImage}
             alt={title}
           />
-          <div className="movie-card__rating">{vote_average.toFixed(1)}</div>
+          <div className="movie-card__rating">{vote_average?.toFixed(1) || '--'}</div>
         </div>
 
         <div className="movie-card__content">

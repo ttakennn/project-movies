@@ -13,7 +13,7 @@ const Layout = ({ children }: LayoutProps) => {
     <div className="app">
       <Header />
       <Search />
-      <div className="container">
+      <div>
         {children}
       </div>
     </div>
