@@ -1,12 +1,13 @@
-import './MovieDetail.scss';
+import "./MovieDetail.scss";
 
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-import Loading from '../Loading/Loading';
-import type { MovieDetail as MovieDetailType } from '../../types/movie';
-import defaultImage from '../../assets/default-image.png';
-import { movieAPI } from '../../services/api';
+import LazyImage from "../LazyImage/LazyImage";
+import Loading from "../Loading/Loading";
+import type { MovieDetail as MovieDetailType } from "../../types/movie";
+import defaultImage from "../../assets/default-image.png";
+import { movieAPI } from "../../services/api";
 
 const MovieDetail = () => {
   const { id } = useParams();
@@ -18,14 +19,16 @@ const MovieDetail = () => {
   useEffect(() => {
     const fetchMovieDetail = async () => {
       if (!id) return;
-      
+
       try {
         setLoading(true);
         setError(null);
         const data = await movieAPI.getMovieDetail(id);
         setMovie(data);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to fetch movie details');
+        setError(
+          err instanceof Error ? err.message : "Failed to fetch movie details"
+        );
       } finally {
         setLoading(false);
       }
@@ -33,6 +36,7 @@ const MovieDetail = () => {
 
     fetchMovieDetail();
   }, [id]);
+
 
   if (loading) {
     return <Loading />;
@@ -65,7 +69,9 @@ const MovieDetail = () => {
     );
   }
 
-  const director = movie.credits?.crew.find(member => member.job === 'Director');
+  const director = movie.credits?.crew.find(
+    (member) => member.job === "Director"
+  );
   const cast = movie.credits?.cast.slice(0, 5) || [];
 
   return (
@@ -76,21 +82,28 @@ const MovieDetail = () => {
 
       <div className="movie-detail__content">
         <div className="movie-detail__poster">
-          <img  
-            src={movieAPI.getImageUrl(movie.poster_path, 'original') || defaultImage} 
-            alt={movie.title} 
-          />
+          <div className="movie-detail__poster-wrapper">
+            <LazyImage
+              src={
+                movieAPI.getImageUrl(movie.poster_path, "original") ||
+                defaultImage
+              }
+              alt={movie.title}
+            />
+          </div>
         </div>
 
         <div className="movie-detail__info">
           <h1 className="movie-detail__title">{movie.title}</h1>
-          
+
           {movie.tagline && (
             <p className="movie-detail__tagline">{movie.tagline}</p>
           )}
 
           <div className="movie-detail__meta">
-            <span className="movie-detail__rating">★ {movie.vote_average.toFixed(1)}</span>
+            <span className="movie-detail__rating">
+              ★ {movie.vote_average.toFixed(1)}
+            </span>
             {movie.runtime > 0 && (
               <span className="movie-detail__duration">
                 {Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m
@@ -102,7 +115,7 @@ const MovieDetail = () => {
           </div>
 
           <div className="movie-detail__genres">
-            {movie.genres.map(genre => (
+            {movie.genres.map((genre) => (
               <span key={genre.id} className="movie-detail__genre-tag">
                 {genre.name}
               </span>
@@ -125,7 +138,7 @@ const MovieDetail = () => {
             <div className="movie-detail__section">
               <h3>Cast</h3>
               <div className="movie-detail__cast">
-                {cast.map(actor => (
+                {cast.map((actor) => (
                   <span key={actor.id} className="movie-detail__cast-member">
                     {actor.name} as {actor.character}
                   </span>
@@ -139,4 +152,4 @@ const MovieDetail = () => {
   );
 };
 
-export default MovieDetail; 
+export default MovieDetail;

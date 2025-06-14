@@ -1,5 +1,6 @@
 import "./MovieCard.scss";
 
+import LazyImage from "../LazyImage/LazyImage";
 import { Link } from "react-router-dom";
 import type { Movie } from "../../types/movie";
 import defaultImage from "../../assets/default-image.png";
@@ -23,10 +24,9 @@ const MovieCard = forwardRef<HTMLAnchorElement, MovieCardProps>(
         className={`movie-card movie-card--${view}`}
       >
         <div className="movie-card__poster">
-          <img
+          <LazyImage
             src={movieAPI.getImageUrl(poster_path) || defaultImage}
             alt={title}
-            loading="lazy"
           />
           <div className="movie-card__rating">{vote_average.toFixed(1)}</div>
         </div>
