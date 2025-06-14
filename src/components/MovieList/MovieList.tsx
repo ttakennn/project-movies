@@ -1,5 +1,6 @@
 import './MovieList.scss';
 
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 const dummyMovies = [
@@ -51,13 +52,17 @@ const MovieList = () => {
       
       <div className={`movie-list ${viewType === 'list' ? 'movie-list--list' : ''}`}>
         {dummyMovies.map(movie => (
-          <div key={movie.id} className="movie-card">
+          <Link 
+            to={`/movie/${movie.id}`} 
+            key={movie.id} 
+            className="movie-card"
+          >
             <img src={movie.image} alt={movie.title} className="movie-card__image" />
             <div className="movie-card__content">
               <h3 className="movie-card__title">{movie.title}</h3>
               <p className="movie-card__date">{movie.releaseDate}</p>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
