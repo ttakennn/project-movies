@@ -2,6 +2,55 @@
   padding: 1rem;
 }
 
+.movie-error {
+  text-align: center;
+  padding: 2rem;
+  background-color: rgba($primary-color, 0.05);
+  border-radius: 8px;
+  margin: 2rem 0;
+
+  p {
+    color: $primary-color;
+    margin-bottom: 1rem;
+  }
+
+  button {
+    padding: 0.5rem 1rem;
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: rgba($primary-color, 0.8);
+    }
+  }
+}
+
+.movie-loading {
+  text-align: center;
+  padding: 2rem;
+  color: $primary-color;
+
+  &__spinner {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 1rem;
+    border: 3px solid rgba($primary-color, 0.1);
+    border-top-color: $primary-color;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .view-toggle {
   margin-bottom: 1.5rem;
   display: flex;
@@ -18,12 +67,11 @@
 
     &:hover {
       background-color: rgba($primary-color, 0.15);
-      color: $primary-color;
     }
 
     &--active {
-      background-color: $primary-color !important;
-      color: white !important;
+      background-color: $primary-color;
+      color: white;
     }
   }
 }

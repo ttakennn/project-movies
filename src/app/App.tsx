@@ -6,13 +6,20 @@ import Layout from '../components/Layout/Layout';
 import MovieDetail from '../components/MovieDetail/MovieDetail';
 import MovieList from '../components/MovieList/MovieList';
 import Sidebar from '../components/Sidebar/Sidebar';
+import { useState } from 'react';
 
-const MovieListWithSidebar = () => (
-  <>
-    <Sidebar />
-    <MovieList />
-  </>
-);
+type MovieCategory = 'now_playing' | 'top_rated';
+
+const MovieListWithSidebar = () => {
+  const [category, setCategory] = useState<MovieCategory>('now_playing');
+
+  return (
+    <>
+      <Sidebar currentCategory={category} onCategoryChange={setCategory} />
+      <MovieList category={category} />
+    </>
+  );
+};
 
 const App = () => {
   return (
