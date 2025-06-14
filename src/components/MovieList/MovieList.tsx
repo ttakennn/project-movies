@@ -3,6 +3,7 @@ import './MovieList.scss';
 import { useCallback, useRef, useState } from 'react';
 
 import { Link } from 'react-router-dom';
+import Loading from '../Loading/Loading';
 import { movieAPI } from '../../services/api';
 import { useMovies } from '../../hooks/useMovies';
 
@@ -63,33 +64,30 @@ const MovieList = ({ category }: MovieListProps) => {
         </button>
       </div>
       
-      <div className={`movie-list ${viewType === 'list' ? 'movie-list--list' : ''}`}>
-        {movies.map((movie, index) => (
-          <Link 
-            ref={index === movies.length - 1 ? lastMovieElementRef : null}
-            to={`/movie/${movie.id}`} 
-            key={movie.id} 
-            className="movie-card"
-          >
-            <img 
-              src={movieAPI.getImageUrl(movie.poster_path)} 
-              alt={movie.title} 
-              className="movie-card__image" 
-            />
-            <div className="movie-card__content">
-              <h3 className="movie-card__title">{movie.title}</h3>
-              <p className="movie-card__date">{movie.release_date}</p>
-            </div>
-          </Link>
-        ))}
-      </div>
-
-      {loading && (
-        <div className="movie-loading">
-          <div className="movie-loading__spinner"></div>
-          <p>Loading more movies...</p>
+      <div className="movie-list-wrapper">
+        <div className={`movie-list ${viewType === 'list' ? 'movie-list--list' : ''}`}>
+          {movies.map((movie, index) => (
+            <Link 
+              ref={index === movies.length - 1 ? lastMovieElementRef : null}
+              to={`/movie/${movie.id}`} 
+              key={movie.id} 
+              className="movie-card"
+            >
+              <img 
+                src={movieAPI.getImageUrl(movie.poster_path)} 
+                alt={movie.title} 
+                className="movie-card__image" 
+              />
+              <div className="movie-card__content">
+                <h3 className="movie-card__title">{movie.title}</h3>
+                <p className="movie-card__date">{movie.release_date}</p>
+              </div>
+            </Link>
+          ))}
         </div>
-      )}
+
+        {loading && <Loading />}
+      </div>
     </div>
   );
 };

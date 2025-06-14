@@ -13,6 +13,13 @@ export const useMovies = (category: MovieCategory) => {
   const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
+    setMovies([]);
+    setPage(1);
+    setHasMore(true);
+    setError(null);
+  }, [category]);
+
+  useEffect(() => {
     const fetchMovies = async () => {
       try {
         setLoading(true);
@@ -22,11 +29,13 @@ export const useMovies = (category: MovieCategory) => {
           ? await movieAPI.getNowPlaying(page)
           : await movieAPI.getTopRated(page);
 
-        if (page === 1) {
-          setMovies(response.results);
-        } else {
-          setMovies(prev => [...prev, ...response.results]);
-        }
+        setMovies(prev => {
+          const existingIds = new Set(prev.map(movie => movie.id));
+          
+          const newMovies = response.results.filter(movie => !existingIds.has(movie.id));
+          
+          return page === 1 ? response.results : [...prev, ...newMovies];
+        });
 
         setHasMore(response.page < response.total_pages);
       } catch (err) {

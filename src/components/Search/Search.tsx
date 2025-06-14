@@ -2,7 +2,7 @@ import './Search.scss';
 
 const Search = () => {
   return (
-    <div className="search">
+    <div className="search container">
       <input 
         type="text" 
         className="search__input" 

@@ -1,11 +1,13 @@
-import './Header.scss';
+import "./Header.scss";
 
 const Header = () => {
   return (
     <header className="header">
-      <div className="header__logo">Movies</div>
+      <div className="container">
+        <div className="header__logo">Movies</div>
+      </div>
     </header>
   );
 };
 
-export default Header; 
+export default Header;
