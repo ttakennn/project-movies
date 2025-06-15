@@ -1,4 +1,4 @@
-$primary-color: #0d253f;
+@use 'variables' as *;
 
 .color-primary {
   color: $primary-color;

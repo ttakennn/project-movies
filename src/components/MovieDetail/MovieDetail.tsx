@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import LazyImage from "../LazyImage/LazyImage";
-import Loading from "../Loading/Loading";
+import { MovieDetailSkeleton } from "../Skeleton/MovieDetailSkeleton";
 import type { MovieDetail as MovieDetailType } from "../../types/movie";
 import defaultImage from "../../assets/default-image.png";
 import { movieAPI } from "../../services/api";
@@ -38,7 +38,16 @@ const MovieDetail = () => {
   }, [id]);
 
   if (loading) {
-    return <Loading />;
+    return (
+      <div className="container">
+        <div className="movie-detail">
+          <button className="movie-detail__back" onClick={() => navigate(-1)}>
+            ← Back
+          </button>
+          <MovieDetailSkeleton />
+        </div>
+      </div>
+    );
   }
 
   if (error) {

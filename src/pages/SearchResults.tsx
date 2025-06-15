@@ -2,8 +2,8 @@ import "./SearchResults.scss";
 
 import { useCallback, useRef } from "react";
 
-import Loading from "../components/Loading/Loading";
 import MovieCard from "../components/MovieCard/MovieCard";
+import SearchResultsSkeleton from "../components/Skeleton/SearchResultsSkeleton";
 import { useSearch } from "../hooks/useSearch";
 import { useSearchParams } from "react-router-dom";
 
@@ -35,8 +35,12 @@ const SearchResults = () => {
     return <div className="search-results__error">{error}</div>;
   }
 
+  if (movies.length === 0 && loading) {
+    return <SearchResultsSkeleton />;
+  }
+
   return (
-    <div>
+    <div className="search-results">
       <header className="search-results__header">
         <h2 className="search-results__title">Search Results for: "{query}"</h2>
         <div className="search-results__count">
@@ -44,22 +48,17 @@ const SearchResults = () => {
         </div>
       </header>
 
-      {movies.length > 0 && (
-        <div className="search-results__list">
-          {movies.map((movie, index) => (
-            <div
-              key={movie.id}
-              ref={
-                index === movies.length - 1 ? lastMovieElementRef : undefined
-              }
-            >
-              <MovieCard movie={movie} view="list" />
-            </div>
-          ))}
-        </div>
-      )}
-
-      {loading && <Loading />}
+      <div className="search-results__list">
+        {movies.map((movie, index) => (
+          <div
+            key={movie.id}
+            ref={index === movies.length - 1 ? lastMovieElementRef : undefined}
+          >
+            <MovieCard movie={movie} view="list" />
+          </div>
+        ))}
+        {loading && hasMore && <SearchResultsSkeleton />}
+      </div>
     </div>
   );
 };

@@ -1,0 +1,23 @@
+// Colors
+$primary-color: #0d253f;
+$background-color: #121212;
+$text-color: #ffffff;
+$text-secondary: rgba(255, 255, 255, 0.7);
+$border-color: rgba(255, 255, 255, 0.1);
+
+// Breakpoints
+$sm: 640px;
+$md: 768px;
+$lg: 1024px;
+$xl: 1280px;
+$xxl: 1536px;
+
+// Z-index
+$z-modal: 1000;
+$z-overlay: 900;
+$z-dropdown: 800;
+$z-header: 700;
+
+// Transitions
+$transition-base: 0.2s ease-in-out;
+$transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1); 

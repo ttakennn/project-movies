@@ -1,0 +1,318 @@
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+// MovieCard Skeleton
+.skeleton-card {
+  width: 100%;
+  height: 100%;
+  background: rgba($background-color, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+
+  &__image {
+    width: 100%;
+    height: 0;
+    padding-bottom: 150%;
+    background-color: rgba($background-color, 0.1);
+  }
+
+  &__content {
+    padding: 1rem;
+  }
+
+  &__title {
+    height: 1.5rem;
+    width: 80%;
+    background-color: rgba($background-color, 0.1);
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+  }
+
+  &__info {
+    height: 1rem;
+    width: 60%;
+    background-color: rgba($background-color, 0.1);
+    border-radius: 4px;
+  }
+}
+
+// MovieDetail Skeleton
+.skeleton-poster {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 150%;
+  background: linear-gradient(
+    90deg,
+    rgba($primary-color, 0.05) 25%,
+    rgba($primary-color, 0.1) 37%,
+    rgba($primary-color, 0.05) 63%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 8px;
+}
+
+.skeleton-title {
+  height: 2rem;
+  width: 70%;
+  background-color: rgba($primary-color, 0.1);
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-tagline {
+  height: 1.2rem;
+  width: 50%;
+  background-color: rgba($primary-color, 0.1);
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.skeleton-meta-item {
+  height: 1.1rem;
+  width: 80px;
+  background-color: rgba($primary-color, 0.1);
+  border-radius: 4px;
+}
+
+.skeleton-genre-tag {
+  height: 1.8rem;
+  width: 100px;
+  background-color: rgba($primary-color, 0.1);
+  border-radius: 20px;
+}
+
+.skeleton-section-title {
+  height: 1.2rem;
+  width: 120px;
+  background-color: rgba($primary-color, 0.1);
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-text {
+  height: 1rem;
+  background-color: rgba($primary-color, 0.1);
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+
+  &:nth-child(2) {
+    width: 100%;
+  }
+
+  &:nth-child(3) {
+    width: 90%;
+  }
+
+  &:nth-child(4) {
+    width: 95%;
+  }
+}
+
+.skeleton-cast-member {
+  height: 1.8rem;
+  width: 180px;
+  background-color: rgba($primary-color, 0.1);
+  border-radius: 20px;
+}
+
+.skeleton-detail {
+  width: 100%;
+
+  &__backdrop {
+    width: 100%;
+    height: 300px;
+    background-color: rgba($background-color, 10%);
+
+    @media (min-width: 768px) {
+      height: 400px;
+    }
+  }
+
+  &__content {
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      padding: 2rem;
+    }
+  }
+
+  &__poster {
+    width: 200px;
+    height: 300px;
+    background-color: rgba($background-color, 10%);
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  &__info {
+    flex: 1;
+  }
+
+  &__title {
+    height: 2.5rem;
+    width: 70%;
+    background-color: rgba($background-color, 10%);
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+
+  &__meta {
+    height: 1.5rem;
+    width: 40%;
+    background-color: rgba($background-color, 10%);
+    border-radius: 4px;
+    margin-bottom: 2rem;
+  }
+
+  &__text {
+    height: 1rem;
+    background-color: rgba($background-color, 10%);
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+
+    &:nth-child(1) {
+      width: 100%;
+    }
+
+    &:nth-child(2) {
+      width: 90%;
+    }
+
+    &:nth-child(3) {
+      width: 80%;
+    }
+  }
+}
+
+.skeleton-loading {
+  background: linear-gradient(90deg, rgba($background-color, 0.05) 25%, rgba($background-color, 0.1) 50%, rgba($background-color, 0.05) 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+}
+
+.search-results-skeleton {
+  padding: 2rem 0;
+
+  &__header {
+    margin-top: 1rem;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    @media (min-width: 640px) { max-width: 640px; }
+    @media (min-width: 768px) { max-width: 768px; }
+    @media (min-width: 1024px) { max-width: 1024px; }
+    @media (min-width: 1280px) { max-width: 1280px; }
+    @media (min-width: 1536px) { max-width: 1536px; }
+  }
+
+  &__title {
+    height: 2rem;
+    width: 60%;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+  }
+
+  &__count {
+    height: 1rem;
+    width: 30%;
+    border-radius: 4px;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1rem;
+
+    @media (min-width: 640px) { max-width: 640px; }
+    @media (min-width: 768px) { max-width: 768px; }
+    @media (min-width: 1024px) { max-width: 1024px; }
+    @media (min-width: 1280px) { max-width: 1280px; }
+    @media (min-width: 1536px) { max-width: 1536px; }
+  }
+
+  &__item {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: rgba($background-color, 10%);
+  }
+
+  &__poster {
+    width: 150px;
+    height: 225px;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__movie-title {
+    height: 1.5rem;
+    width: 70%;
+    border-radius: 4px;
+  }
+
+  &__movie-info {
+    display: flex;
+    gap: 1rem;
+  }
+
+  &__year, &__rating {
+    height: 1rem;
+    width: 80px;
+    border-radius: 4px;
+  }
+
+  &__overview {
+    height: 1rem;
+    width: 100%;
+    border-radius: 4px;
+
+    &:last-child {
+      width: 80%;
+    }
+  }
+} 

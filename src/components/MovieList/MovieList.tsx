@@ -2,8 +2,8 @@ import "./MovieList.scss";
 
 import { useCallback, useRef, useState } from "react";
 
-import Loading from "../Loading/Loading";
 import MovieCard from "../MovieCard/MovieCard";
+import { MovieCardSkeleton } from "../Skeleton/MovieCardSkeleton";
 import { useMovies } from "../../hooks/useMovies";
 
 type MovieCategory = "now_playing" | "top_rated";
@@ -48,6 +48,26 @@ const MovieList = ({ category }: MovieListProps) => {
       </div>
     );
   }
+
+  const renderSkeletons = () => {
+    return Array(8)
+      .fill(null)
+      .map((_, index) => {
+        if (viewType === "list") {
+          return (
+            <div key={`skeleton-${index}`}>
+              <MovieCardSkeleton view="list" />
+            </div>
+          );
+        }
+
+        return (
+          <div key={`skeleton-${index}`}>
+            <MovieCardSkeleton view="grid" />
+          </div>
+        );
+      });
+  };
 
   return (
     <div className="movie-container">
@@ -107,23 +127,28 @@ const MovieList = ({ category }: MovieListProps) => {
       </div>
 
       <div className="movie-list-wrapper">
-          <div
-            className={`movie-list ${
-              viewType === "list" ? "movie-list--list" : ""
-            }`}
-          >
-            {movies.map((movie, index) => (
-              <MovieCard
-                ref={index === movies.length - 1 ? lastMovieElementRef : null}
-                key={movie.id}
-                movie={movie}
-                view={viewType}
-              />
-            ))}
-          </div>
-
-          {loading && <Loading />}
+        <div
+          className={`movie-list ${
+            viewType === "list" ? "movie-list--list" : ""
+          }`}
+        >
+          {movies.length === 0 && loading ? (
+            renderSkeletons()
+          ) : (
+            <>
+              {movies.map((movie, index) => (
+                <MovieCard
+                  ref={index === movies.length - 1 ? lastMovieElementRef : null}
+                  key={movie.id}
+                  movie={movie}
+                  view={viewType}
+                />
+              ))}
+              {loading && hasMore && renderSkeletons()}
+            </>
+          )}
         </div>
+      </div>
     </div>
   );
 };
