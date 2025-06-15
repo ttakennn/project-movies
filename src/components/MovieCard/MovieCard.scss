@@ -18,10 +18,11 @@
   overflow: hidden;
   transition: transform 0.2s, box-shadow 0.2s;
   animation: fadeIn 0.5s ease-out;
-  
+
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    background-color: rgba($primary-color, 0.05);
   }
 
   // Grid view
@@ -47,15 +48,23 @@
   // List view
   &--list {
     display: flex;
+    flex-direction: column;
     gap: 1.5rem;
 
     .movie-card__poster {
-      flex: 0 0 150px;
+      flex: none;
+      @media (min-width: 768px) {
+        flex: 0 0 150px;
+      }
     }
 
     .movie-card__content {
       flex: 1;
-      padding: 1rem 1rem 1rem 0;
+      padding: 1rem 1rem 1rem 1rem;
+
+      @media (min-width: 768px) {
+        padding: 1rem 1rem 1rem 0;
+      }
     }
 
     .movie-card__title {
@@ -69,9 +78,18 @@
       line-height: 1.5;
       margin-top: 0.75rem;
       display: -webkit-box;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 4;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      padding: 0.5rem 0.5rem 0 0;
+    }
+
+    @media (min-width: 640px) {
+      flex-direction: column;
+    }
+
+    @media (min-width: 768px) {
+      flex-direction: row;
     }
   }
 
@@ -98,4 +116,4 @@
     color: #666;
     font-size: 0.875rem;
   }
-} 
+}
